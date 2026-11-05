@@ -100,14 +100,14 @@
 <body>
 <div class="layout">
     <aside class="sidebar">
-        <div class="brand">🍽 BI-KANTIN</div>
+        <div class="brand"> BI-KANTIN</div>
         <div class="subtitle">Sistem Informasi Kantin Sekolah</div>
 
         <div class="nav-title">Menu Utama</div>
         <nav class="nav">
-            <a href="/admin/dashboard" class="active">▦ Dashboard</a>
+            <a href="/admin/dashboard" class="active"> Dashboard</a>
             <a href="#daftar-menu">☰ Daftar Menu</a>
-            <a href="#pesanan">🛒 Pesanan</a>
+            <a href="#pesanan"> Pesanan</a>
         </nav>
 
         <div class="nav-title">Akun</div>
@@ -135,12 +135,12 @@
                     <div class="stat-note">Menu yang terdaftar</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-label">🛒 Total Pesanan</div>
+                    <div class="stat-label"> Total Pesanan</div>
                     <div class="stat-number">{{ \Illuminate\Support\Facades\DB::table('pesanan')->count() }}</div>
                     <div class="stat-note">Pesanan tercatat</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-label">👥 Total Pengguna</div>
+                    <div class="stat-label"> Total Pengguna</div>
                     <div class="stat-number">{{ \Illuminate\Support\Facades\DB::table('users')->count() }}</div>
                     <div class="stat-note">Admin dan siswa</div>
                 </div>
