@@ -17,6 +17,7 @@ class Menu extends Model
         'nama_menu',
         'harga',
         'kategori',
+        'stok',
     ];
 
     public function pesanans()

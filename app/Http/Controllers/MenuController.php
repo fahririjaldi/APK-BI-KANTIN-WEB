@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
-    // Menampilkan semua menu
     public function index()
     {
         $menus = Menu::orderBy('kategori')
@@ -17,54 +16,63 @@ class MenuController extends Controller
         return view('admin.menu.index', compact('menus'));
     }
 
-    // Menyimpan menu baru
     public function store(Request $request)
     {
+        if (!auth()->check() || auth()->user()->role !== 'admin') {
+            abort(403);
+        }
+
         $validated = $request->validate([
             'nama_menu' => 'required|string|max:100',
             'harga' => 'required|integer|min:0',
             'kategori' => 'required|string|max:50',
+            'stok' => 'required|integer|min:0',
         ]);
 
         Menu::create($validated);
 
-        return redirect()
-            ->back()
+        return redirect('/admin/dashboard#daftar-menu')
             ->with('success', 'Menu berhasil ditambahkan.');
     }
 
-    // Memperbarui menu
     public function update(Request $request, $id)
     {
+        if (!auth()->check() || auth()->user()->role !== 'admin') {
+            abort(403);
+        }
+
         $validated = $request->validate([
             'nama_menu' => 'required|string|max:100',
             'harga' => 'required|integer|min:0',
             'kategori' => 'required|string|max:50',
+            'stok' => 'required|integer|min:0',
         ]);
 
         $menu = Menu::findOrFail($id);
         $menu->update($validated);
 
-        return redirect()
-            ->back()
+        return redirect('/admin/dashboard#daftar-menu')
             ->with('success', 'Menu berhasil diperbarui.');
     }
 
-    // Menghapus menu
     public function destroy($id)
     {
+        if (!auth()->check() || auth()->user()->role !== 'admin') {
+            abort(403);
+        }
+
         $menu = Menu::findOrFail($id);
 
         if ($menu->pesanans()->exists()) {
-            return redirect()
-                ->back()
-                ->with('error', 'Menu tidak bisa dihapus karena sudah memiliki pesanan.');
+            return back()->with(
+                'error',
+                'Menu tidak dapat dihapus karena sudah memiliki riwayat pesanan.'
+            );
         }
 
         $menu->delete();
 
-        return redirect()
-            ->back()
+        return redirect('/admin/dashboard#daftar-menu')
             ->with('success', 'Menu berhasil dihapus.');
     }
 }
